@@ -8,7 +8,9 @@ The main hurdle is that they require 48V AC for the synchronous motor that drive
 Don't forget to also connect ADC which is above the pin header.
 
 ## Quirks
-Reading the encoder is quite difficult. Looking into the [schematic](documentation/Alter_Print_Schema.pdf), it is only possible when the motor is not running and ADL and ADC are low.
+The whole interface is active low (this is quite cool actually, because it allows driving the displays with almost any logic voltage), but it also requires the microcontroller to supply own pull-up resistors for the encoder inputs. Here the internal ones are used.
+
+Reading the encoder is quite difficult. Looking into the [schematic](documentation/Alter_Print_Schema.pdf), it is only possible when the motor is not running and ADL and ADC are low (the current display is selected).
 
 But even when I tried it like described in the original timing diagram, the encoder would not always deliver correct values.
 
