@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #define ADC_PIN   9
 #define ADL_PIN   10
 #define START_PIN 11
@@ -6,10 +8,10 @@
 
 byte target = 5;
 
-bool encoderUpdate() {
+bool encoderUpdate() { //returns if final position is reached
   byte encoder = PIND >> 2; //read in encoder value
   if(encoder == 0b111111) //filter out false reading
-    return;
+    return false;
   printByte(encoder); //debug message
   if(encoder == target) { //check if target has been reached
     return true;
@@ -28,6 +30,7 @@ void printByte(byte b) {
 
 void setup() {
   Serial.begin(115200);
+  Serial.println("Fallblatt flapTest1\n");
   
   for(byte i = 2; i <= 7; i++) {
     pinMode(i, INPUT_PULLUP);
@@ -51,7 +54,7 @@ void loop() {
   }
 
   if(Serial.available()) { //receive id of card to show over serial
-    target = Serial.parseInt('\n'); 
+    target = Serial.parseInt(); 
   }
 }
 
